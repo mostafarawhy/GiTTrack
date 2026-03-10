@@ -1,4 +1,4 @@
-import { Star, GitFork, ArrowUpRight } from "lucide-react";
+import { Star, GitFork } from "lucide-react";
 import type { DeveloperProfile } from "@/lib/mock-user";
 
 type TopRepositoriesCardProps = {
