@@ -28,7 +28,7 @@ Rules:
 - Do not invent facts not supported by the data.
 - Do not include markdown.
 - Do not include labels inside the strings.
-
+    
 Return ONLY valid JSON in this exact format:
 
 {
