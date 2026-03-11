@@ -5,7 +5,7 @@ import { Globe, ArrowRight, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { extractGitHubUsername } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
-import { getUser } from "@/lib/github";
+
 import { DashboardPreview } from "@/components/dashboard-preview";
 import {
   Dialog,
@@ -13,6 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { getUser, GitHubUserNotFoundError } from "@/lib/github";
 
 export function Hero() {
   const [userInput, setUserInput] = useState("");
@@ -32,7 +33,12 @@ export function Hero() {
       await getUser(userName);
       router.push(`/users/${userName}`);
     } catch (error) {
-      console.error("Invalid GitHub user:", error);
+      if (error instanceof GitHubUserNotFoundError) {
+        setInvalidOpen(true);
+        return;
+      }
+
+      console.error("Unexpected GitHub lookup error:", error);
       setInvalidOpen(true);
     } finally {
       setLoading(false);

@@ -1,20 +1,26 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
+import type { DeveloperProfile } from "@/lib/map-github-user";
 
 const client = new OpenAI({
   apiKey: process.env.OPENROUTER_API_KEY,
   baseURL: "https://openrouter.ai/api/v1",
 });
 
+type DeveloperRepository = DeveloperProfile["repositories"][number];
+
 export async function POST(req: Request) {
   try {
-    const { developer } = await req.json();
+    const { developer } = (await req.json()) as {
+      developer: DeveloperProfile;
+    };
 
     const prompt = `
 Analyze this GitHub developer profile.
 
 Rules:
-- strong illustrative summary that must be 4 lines long at minimum, and 5 lines at max  only.
+- important the the summary must be atleaset 70 words but not mor that 90 words 
+- Summary must be strong and illustrative.
 - Each list must contain exactly 3 items.
 - Each item (not the summary) must be short: maximum 12 words.
 - Be concise, specific, and professional.
@@ -32,8 +38,6 @@ Return ONLY valid JSON in this exact format:
   "stackFocus": ["string", "string", "string"]
 }
 
-
-
 Developer:
 Name: ${developer.name}
 Username: ${developer.username}
@@ -46,13 +50,14 @@ Total Forks: ${developer.totalForks}
 Top Language: ${developer.topLanguage}
 
 Languages:
-${developer.languages?.map((l: any) => `${l.name}: ${l.value}%`).join("\n")}
+${developer.languages?.map((l) => `${l.name}: ${l.value}%`).join("\n")}
 
 Repositories:
 ${developer.repositories
   ?.slice(0, 8)
   .map(
-    (r: any) => `${r.name} (${r.language}) stars:${r.stars} forks:${r.forks}`,
+    (r: DeveloperRepository) =>
+      `${r.name} (${r.language}) stars:${r.stars} forks:${r.forks}`,
   )
   .join("\n")}
 `;
@@ -62,7 +67,8 @@ ${developer.repositories
       messages: [
         {
           role: "system",
-          content: "You are a GitHub developer profile analyst.",
+          content:
+            "You are a GitHub developer profile analyst. Return only valid JSON.",
         },
         {
           role: "user",

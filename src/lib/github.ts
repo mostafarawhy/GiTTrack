@@ -1,5 +1,12 @@
 const GITHUB_API_BASE = "https://api.github.com";
 
+export class GitHubUserNotFoundError extends Error {
+  constructor() {
+    super("GitHub user not found");
+    this.name = "GitHubUserNotFoundError";
+  }
+}
+
 export type GitHubUser = {
   login: string;
   name: string | null;
@@ -32,7 +39,7 @@ async function githubFetch<T>(endpoint: string): Promise<T> {
 
   if (!response.ok) {
     if (response.status === 404) {
-      throw new Error("GitHub user not found");
+      throw new GitHubUserNotFoundError();
     }
 
     throw new Error(`GitHub API error: ${response.status}`);

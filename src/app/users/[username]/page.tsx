@@ -7,7 +7,6 @@ import { DeveloperInsightsCard } from "@/components/dashboard/developer-insights
 import { getUser, getUserRepos } from "@/lib/github";
 import { mapGitHubDataToDeveloper } from "@/lib/map-github-user";
 import { DashboardTopBar } from "@/components/dashboard/dashboard-top-bar";
-import { notFound } from "next/navigation";
 
 type UserDashboardPageProps = {
   params: Promise<{ username: string }>;
