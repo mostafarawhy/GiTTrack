@@ -123,6 +123,8 @@ The interface was designed as a modern developer tool using:
 
 ## Project Architecture
 
+
+```text
 src
 ├─ app
 │  ├─ api
@@ -134,7 +136,6 @@ src
 │  ├─ globals.css
 │  ├─ layout.tsx
 │  └─ page.tsx
-│
 ├─ components
 │  ├─ dashboard
 │  │  ├─ analytics-grid.tsx
@@ -148,29 +149,25 @@ src
 │  │  ├─ stat-card.tsx
 │  │  ├─ stats-grid.tsx
 │  │  └─ top-repositories-card.tsx
-│  │
 │  ├─ ui
 │  │  ├─ button.tsx
 │  │  ├─ card.tsx
 │  │  ├─ dialog.tsx
 │  │  ├─ input.tsx
 │  │  └─ table.tsx
-│  │
 │  ├─ dashboard-preview.tsx
 │  ├─ footer.tsx
 │  ├─ hero.tsx
 │  └─ navbar.tsx
-│
 ├─ lib
 │  ├─ github.ts
 │  ├─ map-github-user.ts
 │  ├─ mock-user.ts
 │  ├─ profile-analysis.ts
 │  └─ utils.ts
-│
 └─ utils
    └─ helpers.ts
-
+```
 
 
 
@@ -233,7 +230,6 @@ npm run dev
 
 # open
 http://localhost:3000
-
 
 ---
 
