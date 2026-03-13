@@ -20,7 +20,7 @@ GitTrack fetches data directly from the GitHub API and transforms it into an int
 
 ### Developer Dashboard
 
-![Dashboard](./Screenshots//Screenshot%202026-03-11%20at%205.53.57 AM.pngreadme/dashboard.png)
+![Dashboard](./Screenshots//Screenshot%202026-03-11%20at%205.53.57 AM.png)
 ![Dashboard2](./Screenshots/Screenshot%202026-03-11%20at%205.54.08 AM.png)
 
 ### AI Profile Analysis
