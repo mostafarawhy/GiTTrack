@@ -103,7 +103,7 @@ export function ProfileAnalysisModal({ developer }: ProfileAnalysisModalProps) {
             <div className="overflow-y-auto px-6 py-5">
               {loading && (
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-white/70">
-                  Generating analysis...
+                  Generating analysis please wait it might take a minute...
                 </div>
               )}
 
