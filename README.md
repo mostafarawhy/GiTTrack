@@ -197,7 +197,7 @@ The dashboard can be exported as a single-page PDF report.
 
 Clone the repository
 
-git clone https://github.com/mostafarawhy/gittrack.git
+git clone https://github.com/mostafarawhy/GitTrack.git
 
 # Navigate to the project
 
