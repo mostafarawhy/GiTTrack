@@ -32,7 +32,7 @@ export function ProfileAnalysisModal({ developer }: ProfileAnalysisModalProps) {
   } = useQuery({
     queryKey,
     queryFn: () => fetchProfileAnalysis(developer),
-    enabled: true, // starts immediately when component mounts
+    enabled: true, // fetching starts immediately when component mounts
   });
 
   const handleRegenerate = async () => {
@@ -50,7 +50,7 @@ export function ProfileAnalysisModal({ developer }: ProfileAnalysisModalProps) {
           className="h-11 rounded-xl bg-cyan-400 px-4 text-black hover:bg-cyan-300"
         >
           <Sparkles className="mr-2 h-4 w-4" />
-          {isReady ? `Check AI Analysis` :`Analyze Profile`}
+          {isReady ? `Check AI Analysis` : `Analyze Profile`}
         </Button>
 
         {isFetching && (

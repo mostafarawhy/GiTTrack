@@ -28,6 +28,7 @@ export type DeveloperProfile = {
   topLanguage: string;
   githubUrl: string;
   repositories: Repository[];
+  topRepositories: Repository[];
   languages: LanguageStat[];
   insights: string[];
 };
@@ -100,11 +101,22 @@ function generateInsights(
   ];
 }
 
+function sortRepositoriesByStars(repos: Repository[]): Repository[] {
+  return [...repos].sort((a, b) => b.stars - a.stars);
+}
+
+function getTopRepositories(repos: Repository[], limit = 5): Repository[] {
+  return sortRepositoriesByStars(repos).slice(0, limit);
+}
+
 export function mapGitHubDataToDeveloper(
   user: GitHubUser,
   repos: GitHubRepo[],
 ): DeveloperProfile {
   const languages = getLanguageDistribution(repos);
+  const mappedRepositories = mapRepositories(repos);
+  const sortedRepositories = sortRepositoriesByStars(mappedRepositories);
+  const topRepositories = getTopRepositories(sortedRepositories, 5);
 
   return {
     name: user.name ?? user.login,
@@ -118,7 +130,8 @@ export function mapGitHubDataToDeveloper(
     totalForks: getTotalForks(repos),
     topLanguage: getTopLanguage(languages),
     githubUrl: user.html_url,
-    repositories: mapRepositories(repos),
+    repositories: sortedRepositories,
+    topRepositories,
     languages,
     insights: generateInsights(user, repos, languages),
   };

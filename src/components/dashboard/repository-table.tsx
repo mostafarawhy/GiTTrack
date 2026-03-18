@@ -1,71 +1,78 @@
-import { Star, GitFork } from "lucide-react";
-import type { DeveloperProfile } from "@/lib/mock-user";
+"use client";
+
+import { useMemo, useState } from "react";
+import type { DeveloperProfile } from "@/lib/map-github-user";
 
 type RepositoryTableProps = {
   developer: DeveloperProfile;
 };
 
+const INITIAL_VISIBLE_COUNT = 10;
+const LOAD_MORE_COUNT = 10;
+
 export function RepositoryTable({ developer }: RepositoryTableProps) {
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
+
+  const visibleRepositories = useMemo(
+    () => developer.repositories.slice(0, visibleCount),
+    [developer.repositories, visibleCount],
+  );
+
+  const hasMore = developer.repositories.length > visibleCount;
+
+  const handleShowMore = () => {
+    setVisibleCount((prev) => prev + LOAD_MORE_COUNT);
+  };
+
   return (
     <section className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white">Repositories</h3>
-        <p className="text-sm text-white/50">Detailed project breakdown</p>
+      <div className="mb-5 flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-semibold text-white">Repositories</h2>
+          <p className="text-sm text-white/50">
+            Showing {visibleRepositories.length} of{" "}
+            {developer.repositories.length} repositories
+          </p>
+        </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-180 border-separate border-spacing-y-3">
-          <thead>
-            <tr className="text-left text-sm text-white/40">
-              <th className="pb-2 font-medium">Repository</th>
-              <th className="pb-2 font-medium">Language</th>
-              <th className="pb-2 font-medium">Stars</th>
-              <th className="pb-2 font-medium">Forks</th>
-              <th className="pb-2 font-medium">Updated</th>
-            </tr>
-          </thead>
+      <div className="space-y-3 [overflow-achor:none]">
+        {visibleRepositories.map((repo) => (
+          <div
+            key={repo.id}
+            className="rounded-xl border border-white/10 bg-black/20 p-4"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h3 className="font-medium text-white">{repo.name}</h3>
+                <p className="mt-1 text-sm text-white/60">{repo.description}</p>
+              </div>
 
-          <tbody>
-            {developer.repositories.map((repo) => (
-              <tr
-                key={repo.id}
-                className="rounded-xl bg-white/5 text-sm text-white/70"
-              >
-                <td className="rounded-l-xl border-y border-l border-white/10 px-4 py-4">
-                  <div>
-                    <p className="font-medium text-white">{repo.name}</p>
-                    <p className="mt-1 text-xs text-white/50">
-                      {repo.description}
-                    </p>
-                  </div>
-                </td>
+              <span className="shrink-0 text-sm text-cyan-300">
+                {repo.language}
+              </span>
+            </div>
 
-                <td className="border-y border-white/10 px-4 py-4">
-                  {repo.language}
-                </td>
-
-                <td className="border-y border-white/10 px-4 py-4">
-                  <span className="flex items-center gap-2">
-                    <Star className="h-4 w-4 text-yellow-400" />
-                    {repo.stars}
-                  </span>
-                </td>
-
-                <td className="border-y border-white/10 px-4 py-4">
-                  <span className="flex items-center gap-2">
-                    <GitFork className="h-4 w-4 text-cyan-400" />
-                    {repo.forks}
-                  </span>
-                </td>
-
-                <td className="rounded-r-xl border-y border-r border-white/10 px-4 py-4 text-white/50">
-                  {repo.updatedAt}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            <div className="mt-3 flex flex-wrap gap-4 text-sm text-white/50">
+              <span>⭐ {repo.stars}</span>
+              <span>🍴 {repo.forks}</span>
+              <span>Updated {repo.updatedAt}</span>
+            </div>
+          </div>
+        ))}
       </div>
+
+      {hasMore && (
+        <div className="mt-6 flex justify-center">
+          <button
+            type="button"
+            onClick={handleShowMore}
+            className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white transition hover:bg-white/10"
+          >
+            Show more
+          </button>
+        </div>
+      )}
     </section>
   );
 }
