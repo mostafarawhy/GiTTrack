@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Star, GitFork } from "lucide-react";
 import type { DeveloperProfile } from "@/lib/map-github-user";
 
 type RepositoryTableProps = {
@@ -25,38 +26,53 @@ export function RepositoryTable({ developer }: RepositoryTableProps) {
   };
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-      <div className="mb-5 flex items-center justify-between">
+    <section className="rounded border border-border bg-card p-6">
+      <div className="mb-6 flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-white">Repositories</h2>
-          <p className="text-sm text-white/50">
+          <h2 className="font-display text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+            Repositories
+          </h2>
+          <p className="font-mono text-xs text-[var(--text-faint)] mt-1">
             Showing {visibleRepositories.length} of{" "}
             {developer.repositories.length} repositories
           </p>
         </div>
       </div>
 
-      <div className="space-y-3 [overflow-achor:none]">
+      <div className="space-y-2">
         {visibleRepositories.map((repo) => (
           <div
             key={repo.id}
-            className="rounded-xl border border-white/10 bg-black/20 p-4"
+            className="rounded border border-border bg-secondary p-4"
           >
             <div className="flex items-start justify-between gap-4">
-              <div>
-                <h3 className="font-medium text-white">{repo.name}</h3>
-                <p className="mt-1 text-sm text-white/60">{repo.description}</p>
+              <div className="min-w-0">
+                <h3 className="font-mono text-sm text-[var(--text-secondary)] truncate">
+                  {repo.name}
+                </h3>
+                {repo.description && (
+                  <p className="mt-1 font-mono text-xs text-[var(--text-faint)] line-clamp-2">
+                    {repo.description}
+                  </p>
+                )}
               </div>
-
-              <span className="shrink-0 text-sm text-cyan-300">
+              <span className="shrink-0 font-mono text-xs text-primary">
                 {repo.language}
               </span>
             </div>
 
-            <div className="mt-3 flex flex-wrap gap-4 text-sm text-white/50">
-              <span>⭐ {repo.stars}</span>
-              <span>🍴 {repo.forks}</span>
-              <span>Updated {repo.updatedAt}</span>
+            <div className="mt-3 flex flex-wrap items-center gap-4">
+              <span className="flex items-center gap-1 font-mono text-xs text-muted-foreground">
+                <Star className="h-3 w-3" />
+                {repo.stars}
+              </span>
+              <span className="flex items-center gap-1 font-mono text-xs text-muted-foreground">
+                <GitFork className="h-3 w-3" />
+                {repo.forks}
+              </span>
+              <span className="font-mono text-xs text-[var(--text-faint)]">
+                Updated {repo.updatedAt}
+              </span>
             </div>
           </div>
         ))}
@@ -67,7 +83,7 @@ export function RepositoryTable({ developer }: RepositoryTableProps) {
           <button
             type="button"
             onClick={handleShowMore}
-            className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white transition hover:bg-white/10"
+            className="rounded border border-border bg-secondary px-4 py-2 font-mono text-xs text-[var(--text-secondary)] transition-colors hover:bg-muted hover:text-foreground"
           >
             Show more
           </button>

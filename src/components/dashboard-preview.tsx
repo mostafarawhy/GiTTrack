@@ -5,137 +5,106 @@ import {
   Code2,
   FolderKanban,
   Users,
-  ArrowUpRight,
 } from "lucide-react";
 
 export function DashboardPreview() {
   const stats = [
-    {
-      title: "Repos",
-      value: "26",
-      icon: FolderKanban,
-      accent: "cyan",
-    },
-    {
-      title: "Stars",
-      value: "312",
-      icon: Star,
-      accent: "purple",
-    },
-    {
-      title: "Forks",
-      value: "58",
-      icon: GitFork,
-      accent: "cyan",
-    },
-    {
-      title: "Top",
-      value: "TS",
-      icon: Code2,
-      accent: "purple",
-    },
+    { title: "Repos",  value: "26",  icon: FolderKanban },
+    { title: "Stars",  value: "312", icon: Star },
+    { title: "Forks",  value: "58",  icon: GitFork },
+    { title: "Top",    value: "TS",  icon: Code2 },
   ];
 
   const languages = [
-    { name: "TypeScript", value: 45, color: "bg-cyan-400" },
-    { name: "JavaScript", value: 30, color: "bg-purple-400" },
-    { name: "CSS", value: 15, color: "bg-cyan-500" },
-    { name: "HTML", value: 10, color: "bg-fuchsia-400" },
+    { name: "TypeScript", value: 45, color: "var(--color-lang-ts)" },
+    { name: "JavaScript", value: 30, color: "var(--color-lang-js)" },
+    { name: "CSS",        value: 15, color: "var(--color-lang-css)" },
+    { name: "HTML",       value: 10, color: "var(--color-lang-html)" },
   ];
 
   const repos = [
-    {
-      name: "gittrack",
-      description: "Developer analytics dashboard.",
-      language: "TypeScript",
-      stars: 42,
-    },
-    {
-      name: "dermatique",
-      description: "Full-stack skincare e-commerce.",
-      language: "JavaScript",
-      stars: 96,
-    },
-    {
-      name: "foodies-hub",
-      description: "Realtime food-sharing platform.",
-      language: "JavaScript",
-      stars: 71,
-    },
+    { name: "gittrack",    language: "TypeScript", stars: 42 },
+    { name: "dermatique",  language: "JavaScript", stars: 96 },
+    { name: "foodies-hub", language: "JavaScript", stars: 71 },
   ];
 
   return (
-    <div className="mx-auto mt-14 w-full max-w-6xl overflow-hidden rounded-[28px] border border-white/10 bg-black/60 shadow-[0_0_80px_rgba(34,211,238,0.08)] backdrop-blur-2xl">
+    <div className="mx-auto mt-14 w-full max-w-6xl overflow-hidden rounded border border-border bg-card">
       {/* Mini navbar */}
-      <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 md:px-5">
+      <div className="flex items-center justify-between border-b border-border px-4 py-3 md:px-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-purple-500 shadow-[0_0_30px_rgba(34,211,238,0.25)]">
-            <Github className="h-4 w-4 text-black" />
+          <div className="flex h-8 w-8 items-center justify-center rounded bg-primary">
+            <Github className="h-4 w-4 text-primary-foreground" />
           </div>
           <div>
-            <p className="text-base font-semibold text-white">GitTrack</p>
-            <p className="text-[11px] text-white/35">Developer Analytics</p>
+            <p className="font-display text-sm font-semibold uppercase tracking-wider text-foreground">
+              GitTrack
+            </p>
+            <p className="font-mono text-[10px] text-[var(--text-faint)]">
+              Developer Analytics
+            </p>
           </div>
         </div>
 
-        <div className="hidden items-center gap-5 text-xs text-white/45 md:flex">
-          <span>Dashboard</span>
-          <span>Insights</span>
+        <div className="hidden items-center gap-5 md:flex">
+          <span className="font-mono text-xs text-[var(--text-faint)]">Dashboard</span>
+          <span className="font-mono text-xs text-[var(--text-faint)]">Insights</span>
         </div>
       </div>
 
       <div className="space-y-4 p-4 md:p-5">
-        {/* Top mini bar */}
-        <div className="flex flex-col gap-3 rounded-2xl border border-cyan-400/20 bg-white/5 p-4 backdrop-blur-xl md:flex-row md:items-center md:justify-between">
+        {/* Top bar */}
+        <div className="flex flex-col gap-3 rounded border border-border bg-secondary p-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-xs text-white/50">Viewing dashboard for</p>
-            <p className="text-lg font-semibold text-cyan-300">@mostafarawhy</p>
+            <p className="font-mono text-xs text-[var(--text-faint)]">
+              Viewing dashboard for
+            </p>
+            <p className="font-mono text-sm text-foreground">@mostafarawhy</p>
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <div className="rounded-xl bg-cyan-400 px-3 py-2 text-xs font-medium text-black">
+            <div className="rounded bg-primary px-3 py-1.5 font-mono text-xs font-medium uppercase tracking-widest text-primary-foreground">
               Generate Summary
             </div>
-            <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/65">
+            <div className="rounded border border-border px-3 py-1.5 font-mono text-xs text-[var(--text-secondary)]">
               Analyze Profile
             </div>
           </div>
         </div>
 
         {/* Profile */}
-        <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur-xl">
+        <div className="rounded border border-border bg-secondary p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="flex gap-4">
-              <div className="h-16 w-16 rounded-2xl border border-white/10 bg-gradient-to-br from-cyan-400/20 to-purple-500/20" />
+              <div className="h-14 w-14 rounded border border-border bg-muted" />
 
               <div className="space-y-2">
                 <div>
-                  <h3 className="text-2xl font-bold tracking-tight text-white">
+                  <h3 className="font-display text-xl font-semibold uppercase tracking-wide text-foreground">
                     Mostafa Rawhy
                   </h3>
-                  <p className="text-sm text-cyan-300">@mostafarawhy</p>
+                  <p className="font-mono text-xs text-[var(--text-secondary)]">
+                    @mostafarawhy
+                  </p>
                 </div>
 
-                <p className="max-w-xl text-xs leading-5 text-white/55">
-                  Frontend developer building modern interfaces with React,
-                  Next.js, and analytics-driven UX.
-                </p>
-
-                <div className="flex flex-wrap items-center gap-4 text-xs text-white/50">
-                  <span className="flex items-center gap-2">
-                    <Users className="h-3.5 w-3.5 text-cyan-300" />
+                <div className="flex flex-wrap items-center gap-4">
+                  <span className="flex items-center gap-1.5 font-mono text-xs text-[var(--text-faint)]">
+                    <Users className="h-3 w-3" />
                     128 followers
                   </span>
-                  <span>74 following</span>
-                  <span className="flex items-center gap-2">
-                    <FolderKanban className="h-3.5 w-3.5 text-purple-300" />
+                  <span className="font-mono text-xs text-[var(--text-faint)]">
+                    74 following
+                  </span>
+                  <span className="flex items-center gap-1.5 font-mono text-xs text-[var(--text-faint)]">
+                    <FolderKanban className="h-3 w-3" />
                     26 repos
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="w-fit rounded-xl bg-white px-3 py-2 text-xs font-medium text-black">
+            <div className="w-fit rounded border border-border px-3 py-1.5 font-mono text-xs text-[var(--text-secondary)]">
               View GitHub
             </div>
           </div>
@@ -143,26 +112,27 @@ export function DashboardPreview() {
 
         {/* Stats */}
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          {stats.map((stat) => {
+          {stats.map((stat, i) => {
             const Icon = stat.icon;
-            const accentClasses =
-              stat.accent === "cyan"
-                ? "bg-cyan-400/15 text-cyan-300"
-                : "bg-purple-400/15 text-purple-300";
-
             return (
               <div
                 key={stat.title}
-                className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl"
+                className="rounded border border-border bg-secondary p-4"
               >
                 <div className="mb-3 flex items-center justify-between">
-                  <p className="text-xs text-white/45">{stat.title}</p>
-                  <div className={`rounded-xl p-2 ${accentClasses}`}>
-                    <Icon className="h-3.5 w-3.5" />
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    {stat.title}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="rounded bg-muted border border-border p-1.5">
+                      <Icon className="h-3.5 w-3.5 text-muted-foreground" />
+                    </div>
+                    <span
+                      className={`h-1.5 w-1.5 rounded-full ${i === 0 ? "bg-primary" : "border border-border bg-secondary"}`}
+                    />
                   </div>
                 </div>
-
-                <p className="text-2xl font-bold tracking-tight text-white">
+                <p className="font-display text-3xl font-semibold text-foreground">
                   {stat.value}
                 </p>
               </div>
@@ -172,88 +142,73 @@ export function DashboardPreview() {
 
         {/* Analytics */}
         <div className="grid gap-4 xl:grid-cols-2">
-          <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur-xl">
+          {/* Language distribution */}
+          <div className="rounded border border-border bg-secondary p-4">
             <div className="mb-4">
-              <h4 className="text-lg font-semibold text-white">
+              <h4 className="font-display text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                 Language Distribution
               </h4>
-              <p className="text-xs text-white/40">Repository language mix</p>
+              <p className="font-mono text-xs text-[var(--text-faint)]">
+                breakdown of detected repository languages
+              </p>
             </div>
 
-            <div className="grid gap-4 lg:grid-cols-[180px_1fr] lg:items-center">
-              <div className="flex items-center justify-center">
-                <div className="relative h-36 w-36 rounded-full bg-[conic-gradient(#22d3ee_0_45%,#a855f7_45%_75%,#06b6d4_75%_90%,#d946ef_90%_100%)] shadow-[0_0_40px_rgba(34,211,238,0.08)]">
-                  <div className="absolute inset-[22%] rounded-full bg-black/95 ring-1 ring-white/5" />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-[11px] text-white/40">Languages</span>
-                    <span className="text-xl font-bold text-white">4</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                {languages.map((lang) => (
-                  <div
-                    key={lang.name}
-                    className="rounded-xl border border-white/10 bg-white/5 p-3"
-                  >
-                    <div className="mb-2 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={`h-2.5 w-2.5 rounded-full ${lang.color}`}
-                        />
-                        <span className="text-sm font-medium text-white">
-                          {lang.name}
-                        </span>
-                      </div>
-
-                      <span className="text-xs text-white/50">
-                        {lang.value}%
+            <div className="space-y-3">
+              {languages.map((lang) => (
+                <div key={lang.name}>
+                  <div className="mb-1 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="h-2 w-2 rounded-full"
+                        style={{ background: lang.color }}
+                      />
+                      <span className="font-mono text-xs text-[var(--text-secondary)]">
+                        {lang.name}
                       </span>
                     </div>
-
-                    <div className="h-1.5 rounded-full bg-white/10">
-                      <div
-                        className={`h-1.5 rounded-full ${lang.color}`}
-                        style={{ width: `${lang.value}%` }}
-                      />
-                    </div>
+                    <span className="font-mono text-xs text-muted-foreground">
+                      {lang.value}%
+                    </span>
                   </div>
-                ))}
-              </div>
+                  <div className="h-[3px] w-full bg-muted">
+                    <div
+                      className="h-[3px]"
+                      style={{ width: `${lang.value}%`, background: lang.color }}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur-xl">
+          {/* Top repos */}
+          <div className="rounded border border-border bg-secondary p-4">
             <div className="mb-4">
-              <h4 className="text-lg font-semibold text-white">
+              <h4 className="font-display text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                 Top Repositories
               </h4>
-              <p className="text-xs text-white/40">Highest-impact projects</p>
+              <p className="font-mono text-xs text-[var(--text-faint)]">
+                highest-impact projects
+              </p>
             </div>
 
             <div className="space-y-3">
               {repos.map((repo) => (
                 <div
                   key={repo.name}
-                  className="rounded-xl border border-white/10 bg-white/5 p-3"
+                  className="rounded border border-border bg-card p-3"
                 >
-                  <div className="mb-2 flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-sm font-medium text-white">
-                        {repo.name}
-                      </p>
-                      <p className="mt-1 text-xs text-white/40">
-                        {repo.description}
-                      </p>
-                    </div>
-                    <ArrowUpRight className="h-3.5 w-3.5 text-white/30" />
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="font-mono text-sm text-[var(--text-secondary)]">
+                      {repo.name}
+                    </p>
+                    <span className="font-mono text-xs text-primary">
+                      {repo.language}
+                    </span>
                   </div>
-
-                  <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-white/50">
-                    <span>{repo.language}</span>
-                    <span className="flex items-center gap-1">
-                      <Star className="h-3.5 w-3.5 text-yellow-400" />
+                  <div className="mt-2 flex items-center gap-3">
+                    <span className="flex items-center gap-1 font-mono text-xs text-muted-foreground">
+                      <Star className="h-3 w-3" />
                       {repo.stars}
                     </span>
                   </div>

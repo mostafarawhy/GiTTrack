@@ -11,39 +11,51 @@ export function TopRepositoriesCard({ developer }: TopRepositoriesCardProps) {
     .slice(0, 4);
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
+    <section className="rounded border border-border bg-card p-6">
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white">Top Repositories</h3>
-        <p className="text-sm text-white/50">Highest-impact public projects</p>
+        <h2 className="font-display text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+          Top Repositories
+        </h2>
+        <p className="font-mono text-xs text-[var(--text-faint)] mt-1">
+          highest-impact public projects
+        </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {topRepos.map((repo) => (
           <div
             key={repo.id}
-            className="rounded-xl border border-white/10 bg-white/5 p-4 transition-colors hover:bg-white/[0.07]"
+            className="rounded border border-border bg-secondary p-4"
           >
             <div className="mb-2 flex items-start justify-between gap-4">
-              <div>
-                <p className="font-medium text-white">{repo.name}</p>
-                <p className="mt-1 text-sm text-white/50">{repo.description}</p>
+              <div className="min-w-0">
+                <p className="font-mono text-sm text-[var(--text-secondary)] truncate">
+                  {repo.name}
+                </p>
+                {repo.description && (
+                  <p className="mt-1 font-mono text-xs text-[var(--text-faint)] line-clamp-2">
+                    {repo.description}
+                  </p>
+                )}
               </div>
+              <span className="shrink-0 font-mono text-xs text-primary">
+                {repo.language}
+              </span>
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-white/60">
-              <span>{repo.language}</span>
-              <span className="flex items-center gap-1">
-                <Star className="h-4 w-4 text-yellow-400" />
+            <div className="flex flex-wrap items-center gap-4">
+              <span className="flex items-center gap-1 font-mono text-xs text-muted-foreground">
+                <Star className="h-3 w-3" />
                 {repo.stars}
               </span>
-              <span className="flex items-center gap-1">
-                <GitFork className="h-4 w-4 text-cyan-400" />
+              <span className="flex items-center gap-1 font-mono text-xs text-muted-foreground">
+                <GitFork className="h-3 w-3" />
                 {repo.forks}
               </span>
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

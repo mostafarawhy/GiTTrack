@@ -15,6 +15,132 @@ import {
 } from "@/components/ui/dialog";
 import { getUser, GitHubUserNotFoundError } from "@/lib/github";
 
+const CODE_SNIPPETS = [
+  `interface GitHubUser {
+  login: string
+  public_repos: number
+  followers: number
+  created_at: string
+}`,
+  `type Language = {
+  name: string
+  percentage: number
+  color: string
+}`,
+  `async function fetchProfile(
+  username: string
+): Promise<GitHubUser> {
+  const res = await fetch(
+    \`/api/github/\${username}\`
+  )
+  return res.json()
+}`,
+  `const analyzeLanguages = (
+  repos: Repository[]
+): Language[] => {
+  return repos
+    .flatMap(r => r.languages)
+    .reduce(aggregate, [])
+}`,
+  `export const LANG_COLORS:
+  Record<string, string> = {
+  TypeScript: '#5b9cf6',
+  JavaScript: '#c8f135',
+  CSS: '#e96b7e',
+  Python: '#7b8ff5',
+}`,
+  `type StatCard = {
+  label: string
+  value: number | string
+  icon: LucideIcon
+}`,
+  `interface Repository {
+  name: string
+  language: string
+  stargazers_count: number
+  updated_at: string
+  description: string
+}`,
+  `const getDeveloperScore = (
+  user: GitHubUser
+): number => {
+  return Math.min(
+    user.public_repos * 2 +
+    user.followers * 3,
+    100
+  )
+}`,
+];
+
+function CodeBackground() {
+  const columns = [
+    { left: "2%", delay: 0, duration: 40 },
+    { left: "20%", delay: -14, duration: 47 },
+    { left: "38%", delay: -7, duration: 36 },
+    { left: "57%", delay: -22, duration: 52 },
+    { left: "74%", delay: -11, duration: 43 },
+  ];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <style>{`
+        @keyframes codeScroll {
+          from { transform: translateY(0); }
+          to   { transform: translateY(-50%); }
+        }
+        .code-col {
+          position: absolute;
+          top: 0;
+          width: 160px;
+          font-family: 'Geist Mono', monospace;
+          font-size: 10px;
+          line-height: 1.7;
+          white-space: pre;
+          color: rgba(300, 241, 53, 0.12);
+          animation-name: codeScroll;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+          user-select: none;
+        }
+      `}</style>
+
+      {columns.map((col, i) => {
+        const text = Array.from(
+          { length: 6 },
+          (_, j) => CODE_SNIPPETS[(i * 2 + j) % CODE_SNIPPETS.length],
+        ).join("\n\n");
+
+        return (
+          <div
+            key={i}
+            className="code-col"
+            style={{
+              left: col.left,
+              animationDuration: `${col.duration}s`,
+              animationDelay: `${col.delay}s`,
+            }}
+          >
+            {text + "\n\n" + text}
+          </div>
+        );
+      })}
+
+      <div
+        className="absolute inset-x-0 top-0 h-40 pointer-events-none"
+        style={{
+          background: "linear-gradient(to bottom, #0c0c0c 30%, transparent)",
+        }}
+      />
+      <div
+        className="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
+        style={{
+          background: "linear-gradient(to top, #0c0c0c 30%, transparent)",
+        }}
+      />
+    </div>
+  );
+}
+
 export function Hero() {
   const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -47,67 +173,56 @@ export function Hero() {
 
   return (
     <>
-      <section className="relative flex min-h-screen flex-col items-center justify-center px-6 pt-16">
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon-cyan/15 blur-[120px]" />
-          <div className="absolute right-1/3 top-1/2 h-[300px] w-[300px] rounded-full bg-neon-purple/10 blur-[100px]" />
-        </div>
-
+      <section className="relative overflow-hidden flex min-h-screen flex-col items-center justify-center px-6 pt-14">
+        <CodeBackground />
         <div className="relative z-10 mx-auto max-w-3xl text-center">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-5 py-2 backdrop-blur-sm">
-            <span className="h-2 w-2 rounded-full bg-neon-cyan shadow-[0_0_8px_2px] shadow-neon-cyan/50" />
-            <span className="text-sm font-medium text-muted-foreground">
+          <div className="mb-8 inline-flex items-center gap-2 rounded border border-border bg-card px-4 py-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+            <span className="font-mono text-xs text-muted-foreground">
               Developer Analytics Platform
             </span>
-          </div>
-
-          <div className="mb-8 flex items-center justify-center gap-2">
-            <div className="h-0.5 w-16 rounded-full bg-gradient-to-r from-transparent via-neon-cyan to-neon-cyan" />
-            <div className="h-0.5 w-16 rounded-full bg-gradient-to-r from-neon-purple to-transparent" />
           </div>
 
           <h1 className="mb-6 text-balance text-5xl font-bold leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl">
             Analyze GitHub
             <br />
-            <span className="text-neon-cyan">Developer Activity</span>
+            Developer Activity
           </h1>
 
-          <p className="mx-auto mb-10 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
+          <p className="mx-auto mb-10 max-w-xl text-pretty text-lg leading-relaxed text-[var(--text-secondary)]">
             Gain deep insights into any GitHub profile. Track repositories,
             analyze language usage, and discover developer patterns with
             powerful analytics.
           </p>
 
           <form onSubmit={handleSubmit} className="mx-auto max-w-lg">
-            <div className="relative flex items-center rounded-xl bg-gradient-to-r from-neon-cyan/50 via-neon-purple/50 to-neon-purple/50 p-[1px]">
-              <div className="flex w-full items-center rounded-xl bg-card">
-                <div className="flex items-center pl-4">
-                  <Globe className="h-5 w-5 text-neon-purple" />
-                </div>
+            <div className="flex items-center rounded border border-border bg-card">
+              <div className="flex items-center pl-4">
+                <Globe className="h-4 w-4 text-muted-foreground" />
+              </div>
 
-                <input
-                  type="text"
-                  placeholder="Enter GitHub username or Link ..."
-                  value={userInput}
-                  onChange={(e) => setUserInput(e.target.value)}
-                  className="h-14 flex-1 bg-transparent px-4 text-foreground placeholder:text-muted-foreground/60 focus:outline-none"
-                />
+              <input
+                type="text"
+                placeholder="Enter GitHub username or Link ..."
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+                className="h-12 flex-1 bg-transparent px-4 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+              />
 
-                <div className="pr-2">
-                  <Button
-                    type="submit"
-                    disabled={loading}
-                    className="h-10 gap-2 rounded-lg bg-card px-5 text-foreground hover:bg-muted"
-                  >
-                    {loading ? "Checking..." : "Analyze Developer"}
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </div>
+              <div className="pr-2">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="h-8 gap-2 bg-primary px-4 font-mono text-xs uppercase tracking-widest text-primary-foreground hover:bg-primary/90"
+                >
+                  {loading ? "Checking..." : "Analyze"}
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Button>
               </div>
             </div>
           </form>
 
-          <p className="mt-6 text-sm text-muted-foreground">
+          <p className="mt-6 font-mono text-xs text-[var(--text-faint)]">
             Free to use. No account required.
           </p>
 
@@ -116,33 +231,23 @@ export function Hero() {
       </section>
 
       <Dialog open={invalidOpen} onOpenChange={setInvalidOpen}>
-        <DialogContent className="border-white/10 bg-zinc-950 text-white sm:max-w-md">
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div className="absolute left-1/2 top-0 h-36 w-36 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-3xl" />
-            <div className="absolute bottom-0 right-0 h-36 w-36 rounded-full bg-purple-500/10 blur-3xl" />
-          </div>
-
-          <div className="relative z-10">
-            <DialogHeader className="space-y-3 text-left">
-              <div className="flex items-center gap-3">
-                <div className="rounded-2xl bg-red-500/15 p-3 text-red-300">
-                  <AlertTriangle className="h-5 w-5" />
-                </div>
-
-                <div>
-                  <DialogTitle className="text-xl font-semibold">
-                    Invalid GitHub User
-                  </DialogTitle>
-                  <p className="text-sm text-white/55">
-                    Oops — that GitHub username could not be found.
-                  </p>
-                </div>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="rounded bg-destructive/10 p-2 text-destructive">
+                <AlertTriangle className="h-4 w-4" />
               </div>
-            </DialogHeader>
-
-            <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm leading-6 text-white/75">
-              Please check the username or profile link and try again.
+              <div>
+                <DialogTitle>Invalid GitHub User</DialogTitle>
+                <p className="mt-1 font-mono text-xs text-[var(--text-faint)]">
+                  That GitHub username could not be found.
+                </p>
+              </div>
             </div>
+          </DialogHeader>
+
+          <div className="rounded border border-border bg-secondary p-4 font-mono text-sm text-[var(--text-secondary)]">
+            Please check the username or profile link and try again.
           </div>
         </DialogContent>
       </Dialog>

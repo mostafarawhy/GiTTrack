@@ -13,25 +13,22 @@ export function StatsGrid({ developer }: StatsGridProps) {
         title="Repositories"
         value={developer.publicRepos}
         icon={FolderKanban}
-        accent="cyan"
+        isPrimary
       />
       <StatCard
         title="Total Stars"
         value={developer.totalStars}
         icon={Star}
-        accent="purple"
       />
       <StatCard
         title="Forks"
         value={developer.totalForks}
         icon={GitFork}
-        accent="cyan"
       />
       <StatCard
         title="Top Language"
         value={developer.topLanguage}
         icon={Code2}
-        accent="purple"
       />
     </section>
   );

@@ -4,25 +4,31 @@ type StatCardProps = {
   title: string;
   value: string | number;
   icon: LucideIcon;
-  accent: "cyan" | "purple";
+  isPrimary?: boolean;
 };
 
-export function StatCard({ title, value, icon: Icon, accent }: StatCardProps) {
-  const accentClasses =
-    accent === "cyan"
-      ? "from-cyan-400/20 to-cyan-500/5 text-cyan-300"
-      : "from-purple-400/20 to-purple-500/5 text-purple-300";
-
+export function StatCard({ title, value, icon: Icon, isPrimary }: StatCardProps) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+    <div className="rounded border border-border bg-card p-5">
       <div className="mb-4 flex items-center justify-between">
-        <p className="text-sm text-white/60">{title}</p>
-        <div className={`rounded-xl bg-gradient-to-br p-2 ${accentClasses}`}>
-          <Icon className="h-4 w-4" />
+        <div className="rounded bg-secondary border border-border p-2">
+          <Icon className="h-4 w-4 text-muted-foreground" />
         </div>
+        <span
+          className={`h-1.5 w-1.5 rounded-full ${
+            isPrimary
+              ? "bg-primary"
+              : "border border-border bg-secondary"
+          }`}
+        />
       </div>
 
-      <p className="text-2xl font-bold tracking-tight text-white">{value}</p>
+      <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+        {title}
+      </p>
+      <p className="mt-1 font-display text-4xl font-semibold text-foreground">
+        {value}
+      </p>
     </div>
   );
 }

@@ -1,13 +1,49 @@
-"use client";
-
 import type { DeveloperProfile } from "@/lib/map-github-user";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 type LanguageDistributionCardProps = {
   developer: DeveloperProfile;
 };
 
-const COLORS = ["#22d3ee", "#a855f7", "#06b6d4", "#c084fc", "#2dd4bf"];
+const KNOWN_LANGUAGE_COLORS: Record<string, string> = {
+  JavaScript:  "#c8f135",
+  TypeScript:  "#5b9cf6",
+  CSS:         "#e96b7e",
+  HTML:        "#f0a04b",
+  Python:      "#7b8ff5",
+  Rust:        "#e8845a",
+  Go:          "#5dbfb0",
+  Java:        "#e06c5a",
+  Ruby:        "#d45e6e",
+  "C++":       "#9b72cf",
+  C:           "#7a9ecf",
+  Shell:       "#8fbc8f",
+  Swift:       "#f5855a",
+  Kotlin:      "#a97de8",
+  PHP:         "#9b7fcf",
+  Dart:        "#5bc8e8",
+  Vue:         "#8fda8f",
+  Svelte:      "#e87060",
+  Scala:       "#d47060",
+};
+
+const FALLBACK_COLOR_POOL = [
+  "#c8a0e8",
+  "#e8c87a",
+  "#7ad4e8",
+  "#e8a07a",
+  "#a0e8c8",
+  "#e87ab0",
+  "#b0c8e8",
+  "#d4e87a",
+  "#e8b07a",
+  "#7ab0e8",
+];
+
+function getLanguageColor(lang: string): string {
+  if (KNOWN_LANGUAGE_COLORS[lang]) return KNOWN_LANGUAGE_COLORS[lang];
+  const charSum = lang.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  return FALLBACK_COLOR_POOL[charSum % FALLBACK_COLOR_POOL.length];
+}
 
 export function LanguageDistributionCard({
   developer,
@@ -15,85 +51,50 @@ export function LanguageDistributionCard({
   const hasLanguages = developer.languages.length > 0;
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
+    <section className="rounded border border-border bg-card p-6">
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white">
+        <h2 className="font-display text-sm font-semibold uppercase tracking-widest text-muted-foreground">
           Language Distribution
-        </h3>
-        <p className="text-sm text-white/50">
-          Breakdown of detected repository languages
+        </h2>
+        <p className="font-mono text-xs text-[var(--text-faint)] mt-1">
+          breakdown of detected repository languages
         </p>
       </div>
 
       {!hasLanguages ? (
-        <div className="rounded-xl border border-white/10 bg-white/5 p-6 text-sm text-white/60">
+        <div className="rounded border border-border bg-secondary p-6 font-mono text-sm text-muted-foreground">
           No language data available.
         </div>
       ) : (
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="h-[260px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={developer.languages}
-                  dataKey="value"
-                  nameKey="name"
-                  innerRadius={65}
-                  outerRadius={95}
-                  paddingAngle={3}
-                  stroke="rgba(255,255,255,0.08)"
-                  strokeWidth={1}
-                >
-                  {developer.languages.map((entry, index) => (
-                    <Cell
-                      key={entry.name}
-                      fill={COLORS[index % COLORS.length]}
+        <div className="space-y-4">
+          {developer.languages.map((lang) => {
+            const color = getLanguageColor(lang.name);
+            const pct = lang.value.toFixed(1);
+            return (
+              <div key={lang.name} className="flex flex-col gap-1.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="h-2 w-2 shrink-0 rounded-full"
+                      style={{ background: color }}
                     />
-                  ))}
-                </Pie>
-
-                <Tooltip
-                  contentStyle={{
-                    background: "rgba(10, 10, 10, 0.95)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: "12px",
-                    color: "#fff",
-                  }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-
-          <div className="space-y-3">
-            {developer.languages.map((lang, index) => (
-              <div
-                key={lang.name}
-                className="rounded-xl border border-white/10 bg-white/5 p-4"
-              >
-                <div className="mb-2 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span
-                      className="h-3 w-3 rounded-full"
-                      style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                    />
-                    <span className="font-medium text-white">{lang.name}</span>
+                    <span className="font-mono text-sm text-[var(--text-secondary)]">
+                      {lang.name}
+                    </span>
                   </div>
-
-                  <span className="text-sm text-white/60">{lang.value}%</span>
+                  <span className="font-mono text-xs text-muted-foreground">
+                    {pct}%
+                  </span>
                 </div>
-
-                <div className="h-2 rounded-full bg-white/10">
+                <div className="h-[3px] w-full bg-secondary">
                   <div
-                    className="h-2 rounded-full"
-                    style={{
-                      width: `${lang.value}%`,
-                      backgroundColor: COLORS[index % COLORS.length],
-                    }}
+                    className="h-[3px]"
+                    style={{ width: `${pct}%`, background: color }}
                   />
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
       )}
     </section>

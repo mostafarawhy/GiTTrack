@@ -96,10 +96,10 @@ export function ExportAnalysisPdfButton({
   return (
     <Button
       onClick={handleExport}
-      className="rounded-xl bg-cyan-400 text-black hover:bg-cyan-300"
+      className="rounded bg-primary font-mono text-xs uppercase tracking-widest text-primary-foreground hover:bg-primary/90"
     >
       <Download className="mr-2 h-4 w-4" />
-      Export PDF analysis
+      Export PDF
     </Button>
   );
 }

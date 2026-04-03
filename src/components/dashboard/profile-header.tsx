@@ -9,7 +9,7 @@ type ProfileHeaderProps = {
 
 export function ProfileHeader({ developer }: ProfileHeaderProps) {
   return (
-    <section className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_40px_rgba(34,211,238,0.06)] backdrop-blur-xl">
+    <section className="rounded border border-border bg-card p-6">
       <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
         <div className="flex gap-4">
           <Image
@@ -17,29 +17,33 @@ export function ProfileHeader({ developer }: ProfileHeaderProps) {
             alt={developer.name}
             height={80}
             width={80}
-            className="h-20 w-20 rounded-2xl border border-white/10 object-cover"
+            className="h-20 w-20 rounded border border-border object-cover"
           />
 
           <div className="space-y-2">
             <div>
-              <h1 className="text-2xl font-bold text-white md:text-3xl">
+              <h1 className="font-display text-2xl font-semibold uppercase tracking-wide text-foreground md:text-3xl">
                 {developer.name}
               </h1>
-              <p className="text-sm text-cyan-300">@{developer.username}</p>
+              <p className="font-mono text-sm text-[var(--text-secondary)]">
+                @{developer.username}
+              </p>
             </div>
 
-            <p className="max-w-2xl text-sm leading-6 text-white/70">
+            <p className="max-w-2xl font-mono text-sm leading-6 text-[var(--text-secondary)]">
               {developer.bio}
             </p>
 
-            <div className="flex flex-wrap gap-4 text-sm text-white/60">
-              <span className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-cyan-300" />
+            <div className="flex flex-wrap gap-4">
+              <span className="flex items-center gap-2 font-mono text-sm text-muted-foreground">
+                <Users className="h-4 w-4 text-muted-foreground" />
                 {developer.followers} followers
               </span>
-              <span>{developer.following} following</span>
-              <span className="flex items-center gap-2">
-                <FolderGit2 className="h-4 w-4 text-purple-300" />
+              <span className="font-mono text-sm text-muted-foreground">
+                {developer.following} following
+              </span>
+              <span className="flex items-center gap-2 font-mono text-sm text-muted-foreground">
+                <FolderGit2 className="h-4 w-4 text-muted-foreground" />
                 {developer.publicRepos} public repos
               </span>
             </div>
@@ -48,7 +52,8 @@ export function ProfileHeader({ developer }: ProfileHeaderProps) {
 
         <Button
           asChild
-          className="rounded-xl bg-white text-black hover:bg-white/90"
+          variant="outline"
+          className="shrink-0"
         >
           <a href={developer.githubUrl} target="_blank" rel="noreferrer">
             View GitHub
