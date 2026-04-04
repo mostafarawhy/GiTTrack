@@ -14,17 +14,16 @@
 **Live Demo:** [git-trac-k.vercel.app](https://git-trac-k.vercel.app)
 
 ### Landing Page
-![Landing Page](./Screenshots/Screenshot%202026-03-11%20at%205.53.22%20AM.png)
+![Landing Page](./Screenshots/Landing-Page.png)
 
 ### Developer Dashboard
-![Dashboard](./Screenshots/Screenshot%202026-03-11%20at%205.53.57%20AM.png)
-![Dashboard](./Screenshots/Screenshot%202026-03-11%20at%205.54.08%20AM.png)
+![Dashboard](./Screenshots/Profile-dashboard-summary.png)
+![Dashboard](./Screenshots/Profile-dashboard-summary-2.png)
 
 ### AI Profile Analysis
-![AI Analysis](./Screenshots/Screenshot%202026-03-11%20at%205.54.25%20AM.png)
+![AI Analysis](./Screenshots/Ai-summary.png)
 
-### Exported PDF Report
-![PDF Export](./Screenshots/Screenshot%202026-03-11%20at%207.08.08%20AM.png)
+
 
 ---
 
