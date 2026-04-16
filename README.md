@@ -14,14 +14,13 @@
 **Live Demo:** [git-trac-k.vercel.app](https://git-trac-k.vercel.app)
 
 ### Landing Page
-![Landing Page](./Screenshots/Landing-Page.png)
+![Landing Page](./Screenshots/Home-Page.png)
 
 ### Developer Dashboard
-![Dashboard](./Screenshots/Profile-dashboard-summary.png)
-![Dashboard](./Screenshots/Profile-dashboard-summary-2.png)
+![Dashboard](./Screenshots/Profile-Analysis.png)
 
 ### AI Profile Analysis
-![AI Analysis](./Screenshots/Ai-summary.png)
+![AI Analysis](./Screenshots/AI-Analysis.png)
 
 
 
