@@ -4,52 +4,59 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(0.09 0 0);
-  --foreground: oklch(0.93 0 0);
-  --card: oklch(0.11 0 0);
-  --card-foreground: oklch(0.93 0 0);
-  --popover: oklch(0.11 0 0);
-  --popover-foreground: oklch(0.93 0 0);
-  --primary: oklch(0.91 0.2 128);
-  --primary-foreground: oklch(0.09 0 0);
-  --secondary: oklch(0.14 0 0);
-  --secondary-foreground: oklch(0.93 0 0);
-  --muted: oklch(0.16 0 0);
-  --muted-foreground: oklch(0.78 0 0);
-  --accent: oklch(0.91 0.2 128);
-  --accent-foreground: oklch(0.09 0 0);
-  --destructive: oklch(0.6 0.2 25);
+  --background: oklch(0.09 0.004 264);
+  --foreground: oklch(0.91 0.004 264);
+  --card: oklch(0.11 0.004 264);
+  --card-foreground: oklch(0.91 0.004 264);
+  --popover: oklch(0.11 0.004 264);
+  --popover-foreground: oklch(0.91 0.004 264);
+
+  --primary: oklch(0.62 0.13 250);
+  --primary-foreground: oklch(0.98 0 0);
+
+  --secondary: oklch(0.14 0.004 264);
+  --secondary-foreground: oklch(0.91 0.004 264);
+  --muted: oklch(0.16 0.003 264);
+  --muted-foreground: oklch(0.72 0.004 264);
+
+  --accent: oklch(0.62 0.13 250);
+  --accent-foreground: oklch(0.98 0 0);
+
+  --destructive: oklch(0.58 0.18 25);
   --destructive-foreground: oklch(0.93 0 0);
-  --border: oklch(0.18 0 0);
-  --border-strong: oklch(0.22 0 0);
-  --input: oklch(0.14 0 0);
-  --ring: oklch(0.91 0.2 128);
+
+  --border: oklch(0.17 0.004 264);
+  --border-strong: oklch(0.22 0.004 264);
+  --input: oklch(0.14 0.004 264);
+  --ring: oklch(0.62 0.13 250);
   --radius: 0.25rem;
-  --lang-js: oklch(0.91 0.2 128);
-  --lang-ts: oklch(0.65 0.15 240);
-  --lang-css: oklch(0.65 0.18 15);
-  --lang-html: oklch(0.72 0.15 55);
-  --lang-py: oklch(0.7 0.14 260);
-  --lang-rust: oklch(0.65 0.16 35);
-  --lang-go: oklch(0.68 0.14 195);
-  --lang-java: oklch(0.62 0.16 25);
-  --lang-rb: oklch(0.6 0.18 10);
-  --lang-other: oklch(0.5 0 0);
+
+  --lang-js: oklch(0.72 0.14 88);
+  --lang-ts: oklch(0.6 0.13 250);
+  --lang-css: oklch(0.6 0.15 15);
+  --lang-html: oklch(0.65 0.13 48);
+  --lang-py: oklch(0.62 0.12 260);
+  --lang-rust: oklch(0.6 0.14 35);
+  --lang-go: oklch(0.62 0.12 195);
+  --lang-java: oklch(0.58 0.14 25);
+  --lang-rb: oklch(0.56 0.16 10);
+  --lang-other: oklch(0.42 0.004 264);
+
   --chart-1: var(--lang-js);
   --chart-2: var(--lang-ts);
   --chart-3: var(--lang-css);
   --chart-4: var(--lang-html);
   --chart-5: var(--lang-py);
-  --text-primary: oklch(0.93 0 0);
-  --text-secondary: oklch(0.78 0 0);
-  --text-muted: oklch(0.65 0 0);
-  --text-faint: oklch(0.55 0 0);
+
+  --text-primary: oklch(0.91 0.004 264);
+  --text-secondary: oklch(0.72 0.004 264);
+  --text-muted: oklch(0.58 0.004 264);
+  --text-faint: oklch(0.42 0.004 264);
 }
 
 @theme inline {
   --font-sans: "Geist", "Geist Fallback";
   --font-mono: "Geist Mono", "Geist Mono Fallback";
-  --font-display: "Barlow Condensed", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -105,38 +112,5 @@
 }
 
 .bg-dashboard {
-  position: relative;
-  background: #0c0c0c;
-}
-
-.bg-dashboard::before {
-  content: "";
-  position: fixed;
-  top: -200px;
-  right: -150px;
-  width: 700px;
-  height: 700px;
-  background: radial-gradient(
-    circle,
-    rgba(200, 241, 53, 0.035) 0%,
-    transparent 65%
-  );
-  pointer-events: none;
-  z-index: 0;
-}
-
-.bg-dashboard::after {
-  content: "";
-  position: fixed;
-  bottom: -150px;
-  left: -100px;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(
-    circle,
-    rgba(200, 241, 53, 0.02) 0%,
-    transparent 65%
-  );
-  pointer-events: none;
-  z-index: 0;
+  background: oklch(0.09 0.004 264);
 }

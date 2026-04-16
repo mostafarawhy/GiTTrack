@@ -5,7 +5,6 @@ import { Globe, ArrowRight, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { extractGitHubUsername } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
-
 import { DashboardPreview } from "@/components/dashboard-preview";
 import {
   Dialog,
@@ -15,132 +14,6 @@ import {
 } from "@/components/ui/dialog";
 import { getUser, GitHubUserNotFoundError } from "@/lib/github";
 
-const CODE_SNIPPETS = [
-  `interface GitHubUser {
-  login: string
-  public_repos: number
-  followers: number
-  created_at: string
-}`,
-  `type Language = {
-  name: string
-  percentage: number
-  color: string
-}`,
-  `async function fetchProfile(
-  username: string
-): Promise<GitHubUser> {
-  const res = await fetch(
-    \`/api/github/\${username}\`
-  )
-  return res.json()
-}`,
-  `const analyzeLanguages = (
-  repos: Repository[]
-): Language[] => {
-  return repos
-    .flatMap(r => r.languages)
-    .reduce(aggregate, [])
-}`,
-  `export const LANG_COLORS:
-  Record<string, string> = {
-  TypeScript: '#5b9cf6',
-  JavaScript: '#c8f135',
-  CSS: '#e96b7e',
-  Python: '#7b8ff5',
-}`,
-  `type StatCard = {
-  label: string
-  value: number | string
-  icon: LucideIcon
-}`,
-  `interface Repository {
-  name: string
-  language: string
-  stargazers_count: number
-  updated_at: string
-  description: string
-}`,
-  `const getDeveloperScore = (
-  user: GitHubUser
-): number => {
-  return Math.min(
-    user.public_repos * 2 +
-    user.followers * 3,
-    100
-  )
-}`,
-];
-
-function CodeBackground() {
-  const columns = [
-    { left: "2%", delay: 0, duration: 40 },
-    { left: "20%", delay: -14, duration: 47 },
-    { left: "38%", delay: -7, duration: 36 },
-    { left: "57%", delay: -22, duration: 52 },
-    { left: "74%", delay: -11, duration: 43 },
-  ];
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <style>{`
-        @keyframes codeScroll {
-          from { transform: translateY(0); }
-          to   { transform: translateY(-50%); }
-        }
-        .code-col {
-          position: absolute;
-          top: 0;
-          width: 160px;
-          font-family: 'Geist Mono', monospace;
-          font-size: 10px;
-          line-height: 1.7;
-          white-space: pre;
-          color: rgba(300, 241, 53, 0.12);
-          animation-name: codeScroll;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-          user-select: none;
-        }
-      `}</style>
-
-      {columns.map((col, i) => {
-        const text = Array.from(
-          { length: 6 },
-          (_, j) => CODE_SNIPPETS[(i * 2 + j) % CODE_SNIPPETS.length],
-        ).join("\n\n");
-
-        return (
-          <div
-            key={i}
-            className="code-col"
-            style={{
-              left: col.left,
-              animationDuration: `${col.duration}s`,
-              animationDelay: `${col.delay}s`,
-            }}
-          >
-            {text + "\n\n" + text}
-          </div>
-        );
-      })}
-
-      <div
-        className="absolute inset-x-0 top-0 h-40 pointer-events-none"
-        style={{
-          background: "linear-gradient(to bottom, #0c0c0c 30%, transparent)",
-        }}
-      />
-      <div
-        className="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
-        style={{
-          background: "linear-gradient(to top, #0c0c0c 30%, transparent)",
-        }}
-      />
-    </div>
-  );
-}
-
 export function Hero() {
   const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -149,13 +22,10 @@ export function Hero() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
       const userName = extractGitHubUsername(userInput);
       if (!userName) return;
-
       setLoading(true);
-
       await getUser(userName);
       router.push(`/users/${userName}`);
     } catch (error) {
@@ -163,7 +33,6 @@ export function Hero() {
         setInvalidOpen(true);
         return;
       }
-
       console.error("Unexpected GitHub lookup error:", error);
       setInvalidOpen(true);
     } finally {
@@ -173,57 +42,150 @@ export function Hero() {
 
   return (
     <>
-      <section className="relative overflow-hidden flex min-h-screen flex-col items-center justify-center px-6 pt-14">
-        <CodeBackground />
-        <div className="relative z-10 mx-auto max-w-3xl text-center">
-          <div className="mb-8 inline-flex items-center gap-2 rounded border border-border bg-card px-4 py-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            <span className="font-mono text-xs text-muted-foreground">
-              Developer Analytics Platform
+      <section className="flex min-h-screen flex-col items-center justify-center px-6">
+        <div className="mx-auto max-w-3xl text-center">
+          {/* eyebrow */}
+          <div className="inline-flex items-center gap-2 mb-8">
+            <span
+              style={{
+                display: "inline-block",
+                width: "20px",
+                height: "1px",
+                background: "oklch(0.28 0.004 264)",
+              }}
+            />
+            <span
+              style={{
+                fontFamily: "'Geist Mono', monospace",
+                fontSize: "11px",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "oklch(0.42 0.004 264)",
+              }}
+            >
+              Developer Analytics
             </span>
+            <span
+              style={{
+                display: "inline-block",
+                width: "20px",
+                height: "1px",
+                background: "oklch(0.28 0.004 264)",
+              }}
+            />
           </div>
 
-          <h1 className="mb-6 text-balance text-5xl font-bold leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl">
+          {/* headline */}
+          <h1
+            className="mt-24 mb-6 text-balance text-foreground"
+            style={{
+              fontSize: "clamp(40px, 7vw, 72px)",
+              fontWeight: 600,
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+            }}
+          >
             Analyze GitHub
             <br />
-            Developer Activity
+            <h1 className="text-primary">Developer Activity</h1>
           </h1>
 
-          <p className="mx-auto mb-10 max-w-xl text-pretty text-lg leading-relaxed text-[var(--text-secondary)]">
-            Gain deep insights into any GitHub profile. Track repositories,
-            analyze language usage, and discover developer patterns with
-            powerful analytics.
+          {/* subhead */}
+          <p
+            className="mx-auto mb-10 max-w-md text-pretty leading-relaxed"
+            style={{
+              fontSize: "15px",
+              fontWeight: 300,
+              color: "oklch(0.58 0.004 264)",
+            }}
+          >
+            Deep insights into any GitHub profile. Track repositories, language
+            distribution, and developer patterns — no account required.
           </p>
 
+          {/* search bar */}
           <form onSubmit={handleSubmit} className="mx-auto max-w-lg">
-            <div className="flex items-center rounded border border-border bg-card">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                border: "1px solid oklch(0.17 0.004 264)",
+                borderRadius: "6px",
+                background: "oklch(0.11 0.004 264)",
+              }}
+              onFocusCapture={(e) =>
+                (e.currentTarget.style.borderColor = "oklch(0.28 0.004 264)")
+              }
+              onBlurCapture={(e) =>
+                (e.currentTarget.style.borderColor = "oklch(0.17 0.004 264)")
+              }
+            >
               <div className="flex items-center pl-4">
-                <Globe className="h-4 w-4 text-muted-foreground" />
+                <Globe
+                  className="h-4 w-4"
+                  style={{ color: "oklch(0.38 0.004 264)" }}
+                />
               </div>
 
               <input
                 type="text"
-                placeholder="Enter GitHub username or Link ..."
+                placeholder="Enter GitHub username or link..."
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
-                className="h-12 flex-1 bg-transparent px-4 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+                style={{
+                  flex: 1,
+                  height: "48px",
+                  background: "transparent",
+                  border: "none",
+                  outline: "none",
+                  padding: "0 16px",
+                  fontFamily: "'Geist Mono', monospace",
+                  fontSize: "13px",
+                  color: "oklch(0.91 0.004 264)",
+                }}
               />
 
-              <div className="pr-2">
+              <div style={{ padding: "0 6px" }}>
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="h-8 gap-2 bg-primary px-4 font-mono text-xs uppercase tracking-widest text-primary-foreground hover:bg-primary/90"
+                  style={{
+                    height: "36px",
+                    padding: "0 16px",
+                    background: "oklch(0.62 0.13 250)",
+                    color: "oklch(0.98 0 0)",
+                    border: "none",
+                    borderRadius: "4px",
+                    fontFamily: "'Geist Mono', monospace",
+                    fontSize: "11px",
+                    fontWeight: 500,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    cursor: loading ? "not-allowed" : "pointer",
+                    opacity: loading ? 0.6 : 1,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                  }}
                 >
                   {loading ? "Checking..." : "Analyze"}
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  {!loading && <ArrowRight style={{ width: 13, height: 13 }} />}
                 </Button>
               </div>
             </div>
           </form>
 
-          <p className="mt-6 font-mono text-xs text-[var(--text-faint)]">
-            Free to use. No account required.
+          {/* meta */}
+          <p
+            className="mt-5"
+            style={{
+              fontFamily: "'Geist Mono', monospace",
+              fontSize: "11px",
+              color: "oklch(0.32 0.004 264)",
+              letterSpacing: "0.04em",
+            }}
+          >
+            Free to use &nbsp;·&nbsp; No account required
           </p>
 
           <DashboardPreview />
@@ -234,20 +196,45 @@ export function Hero() {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <div className="flex items-center gap-3">
-              <div className="rounded bg-destructive/10 p-2 text-destructive">
+              <div
+                style={{
+                  borderRadius: "6px",
+                  padding: "8px",
+                  background: "oklch(0.58 0.18 25 / 0.12)",
+                  color: "oklch(0.58 0.18 25)",
+                  display: "flex",
+                }}
+              >
                 <AlertTriangle className="h-4 w-4" />
               </div>
               <div>
-                <DialogTitle>Invalid GitHub User</DialogTitle>
-                <p className="mt-1 font-mono text-xs text-[var(--text-faint)]">
+                <DialogTitle>User not found</DialogTitle>
+                <p
+                  style={{
+                    marginTop: "3px",
+                    fontFamily: "'Geist Mono', monospace",
+                    fontSize: "11px",
+                    color: "oklch(0.42 0.004 264)",
+                  }}
+                >
                   That GitHub username could not be found.
                 </p>
               </div>
             </div>
           </DialogHeader>
-
-          <div className="rounded border border-border bg-secondary p-4 font-mono text-sm text-[var(--text-secondary)]">
-            Please check the username or profile link and try again.
+          <div
+            style={{
+              borderRadius: "6px",
+              border: "1px solid oklch(0.17 0.004 264)",
+              background: "oklch(0.11 0.004 264)",
+              padding: "14px 16px",
+              fontFamily: "'Geist Mono', monospace",
+              fontSize: "12px",
+              color: "oklch(0.52 0.004 264)",
+              lineHeight: 1.6,
+            }}
+          >
+            Check the username or profile link and try again.
           </div>
         </DialogContent>
       </Dialog>
