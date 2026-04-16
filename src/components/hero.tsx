@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { getUser, GitHubUserNotFoundError } from "@/lib/github";
+import { TopProgressBar } from "./TopProgressBar";
 
 export function Hero() {
   const [userInput, setUserInput] = useState("");
@@ -42,9 +43,9 @@ export function Hero() {
 
   return (
     <>
+      <TopProgressBar isLoading={loading} />
       <section className="flex min-h-screen flex-col items-center justify-center px-6">
         <div className="mx-auto max-w-3xl text-center">
-          {/* eyebrow */}
           <div className="inline-flex items-center gap-2 mb-8">
             <span
               style={{
@@ -75,7 +76,6 @@ export function Hero() {
             />
           </div>
 
-          {/* headline */}
           <h1
             className="mt-24 mb-6 text-balance text-foreground"
             style={{
@@ -87,10 +87,9 @@ export function Hero() {
           >
             Analyze GitHub
             <br />
-            <h1 className="text-primary">Developer Activity</h1>
+            <span className="text-primary">Developer Activity</span>
           </h1>
 
-          {/* subhead */}
           <p
             className="mx-auto mb-10 max-w-md text-pretty leading-relaxed"
             style={{
@@ -103,7 +102,6 @@ export function Hero() {
             distribution, and developer patterns — no account required.
           </p>
 
-          {/* search bar */}
           <form onSubmit={handleSubmit} className="mx-auto max-w-lg">
             <div
               style={{
@@ -175,7 +173,6 @@ export function Hero() {
             </div>
           </form>
 
-          {/* meta */}
           <p
             className="mt-5"
             style={{
@@ -191,7 +188,6 @@ export function Hero() {
           <DashboardPreview />
         </div>
       </section>
-
       <Dialog open={invalidOpen} onOpenChange={setInvalidOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>

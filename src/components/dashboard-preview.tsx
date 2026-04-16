@@ -30,7 +30,7 @@ export function DashboardPreview() {
 
   return (
     <div className="mx-auto mt-14 w-full max-w-6xl overflow-hidden rounded border border-border bg-card">
-      {/* Mini navbar */}
+
       <div className="flex items-center justify-between border-b border-border px-4 py-3 md:px-5">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded bg-primary">
@@ -53,7 +53,7 @@ export function DashboardPreview() {
       </div>
 
       <div className="space-y-4 p-4 md:p-5">
-        {/* Top bar */}
+
         <div className="flex flex-col gap-3 rounded border border-border bg-secondary p-4 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="font-mono text-xs text-[var(--text-faint)]">
@@ -72,7 +72,7 @@ export function DashboardPreview() {
           </div>
         </div>
 
-        {/* Profile */}
+
         <div className="rounded border border-border bg-secondary p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="flex gap-4">
@@ -110,7 +110,7 @@ export function DashboardPreview() {
           </div>
         </div>
 
-        {/* Stats */}
+
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {stats.map((stat, i) => {
             const Icon = stat.icon;
@@ -140,9 +140,9 @@ export function DashboardPreview() {
           })}
         </div>
 
-        {/* Analytics */}
+
         <div className="grid gap-4 xl:grid-cols-2">
-          {/* Language distribution */}
+
           <div className="rounded border border-border bg-secondary p-4">
             <div className="mb-4">
               <h4 className="font-display text-sm font-semibold uppercase tracking-widest text-muted-foreground">
@@ -181,7 +181,7 @@ export function DashboardPreview() {
             </div>
           </div>
 
-          {/* Top repos */}
+
           <div className="rounded border border-border bg-secondary p-4">
             <div className="mb-4">
               <h4 className="font-display text-sm font-semibold uppercase tracking-widest text-muted-foreground">
